@@ -2,7 +2,7 @@
 
 import { InformationCircleIcon, AcademicCapIcon, CalendarIcon, DocumentTextIcon } from '@heroicons/react/24/outline'
 
-export function PSBInfo() {
+export function PSBInfo({ locale = 'id' }: { locale?: string }) {
   return (
     <div className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
