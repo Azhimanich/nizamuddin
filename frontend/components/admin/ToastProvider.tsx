@@ -4,6 +4,13 @@ import { createContext, useContext, useState, useCallback, ReactNode } from 'rea
 import { Toast, ToastType } from './Toast'
 import { ToastContainer } from './Toast'
 
+interface ToastItem {
+  id: string
+  message: string
+  type: ToastType
+  duration?: number
+}
+
 interface ToastContextType {
   showToast: (message: string, type: ToastType, duration?: number) => void
   showSuccess: (message: string, duration?: number) => void
@@ -15,7 +22,7 @@ interface ToastContextType {
 const ToastContext = createContext<ToastContextType | undefined>(undefined)
 
 export function ToastProvider({ children }: { children: ReactNode }) {
-  const [toasts, setToasts] = useState<Toast[]>([])
+  const [toasts, setToasts] = useState<ToastItem[]>([])
 
   const removeToast = useCallback((id: string) => {
     setToasts((prev) => prev.filter((toast) => toast.id !== id))
@@ -23,7 +30,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 
   const showToast = useCallback((message: string, type: ToastType, duration = 5000) => {
     const id = Math.random().toString(36).substring(2, 9)
-    const newToast: Toast = { id, message, type, duration }
+    const newToast: ToastItem = { id, message, type, duration }
     setToasts((prev) => [...prev, newToast])
   }, [])
 
@@ -46,7 +53,18 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={{ showToast, showSuccess, showError, showWarning, showInfo }}>
       {children}
-      <ToastContainer toasts={toasts} onClose={removeToast} />
+      <ToastContainer>
+        {toasts.map((toast) => (
+          <Toast
+            key={toast.id}
+            message={toast.message}
+            type={toast.type}
+            isVisible={true}
+            onClose={() => removeToast(toast.id)}
+            duration={toast.duration}
+          />
+        ))}
+      </ToastContainer>
     </ToastContext.Provider>
   )
 }
