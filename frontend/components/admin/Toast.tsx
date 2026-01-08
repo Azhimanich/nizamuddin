@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import type { ReactNode } from 'react'
 import { CheckCircleIcon, XCircleIcon, ExclamationTriangleIcon, InformationCircleIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 export type ToastType = 'success' | 'error' | 'warning' | 'info'
@@ -85,6 +86,14 @@ export function useToast() {
     showWarning: (message: string) => showToast(message, 'warning'),
     showInfo: (message: string) => showToast(message, 'info'),
   }
+}
+
+export function ToastContainer({ children }: { children: ReactNode }) {
+  return (
+    <div className="fixed top-4 right-4 z-50 space-y-2">
+      {children}
+    </div>
+  )
 }
 
 // Helper function untuk validasi gambar
