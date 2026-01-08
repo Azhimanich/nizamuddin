@@ -3,7 +3,8 @@
 import { useState } from 'react'
 import { MagnifyingGlassIcon, CheckCircleIcon, ExclamationTriangleIcon, ClockIcon } from '@heroicons/react/24/outline'
 
-export default function PSBStatusCheckPage({ locale = 'id' }: { locale?: string }) {
+export default function PSBStatusCheckPage({ params }: { params: { locale: string } }) {
+  const locale = params.locale || 'id'
   const [nik, setNik] = useState('')
   const [isChecking, setIsChecking] = useState(false)
   const [result, setResult] = useState<any>(null)
