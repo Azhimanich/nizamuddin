@@ -54,8 +54,8 @@ export default function AgendaPage() {
             { key: 'type', label: 'Tipe', render: (v) => v === 'activity' ? 'Kegiatan' : v === 'exam' ? 'Ujian' : v === 'holiday' ? 'Libur' : v }
           ]}
           data={agendas} 
-          onEdit={null}
-          onDelete={null}
+          onEdit={undefined}
+          onDelete={undefined}
           loading={loading} 
         />
         <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
