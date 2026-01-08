@@ -70,9 +70,9 @@ export default function BeritaDetailPage({ params }: { params: { locale: string;
       updateMetaTag('twitter:image', metaImage)
 
       // Add structured data
-      let structuredData = document.getElementById('structured-data-article')
+      let structuredData = document.getElementById('structured-data-article') as HTMLScriptElement
       if (!structuredData) {
-        structuredData = document.createElement('script')
+        structuredData = document.createElement('script') as HTMLScriptElement
         structuredData.id = 'structured-data-article'
         structuredData.type = 'application/ld+json'
         document.head.appendChild(structuredData)
