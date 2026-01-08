@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Profile API</title>
+</head>
+<body>
+    <h1>Test Profile API</h1>
+    <button onclick="testAPI()">Test API</button>
+    <pre id="result"></pre>
+
+    <script>
+        async function testAPI() {
+            try {
+                const response = await fetch('http://localhost:8000/api/profile?locale=id');
+                const data = await response.json();
+                
+                document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+                
+                console.log('API Response:', data);
+                console.log('Video profil exists:', !!data.video?.video_profil);
+                console.log('YouTube URL:', data.video?.video_profil?.content?.youtube_url);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('result').textContent = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

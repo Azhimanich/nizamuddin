@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Export PSB</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        button { background: #10b981; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; margin: 10px; }
+        button:hover { background: #059669; }
+        .result { margin-top: 20px; padding: 10px; border-radius: 4px; }
+        .success { background: #d1fae5; color: #065f46; }
+        .error { background: #fee2e2; color: #991b1b; }
+        .info { background: #dbeafe; color: #1e40af; }
+    </style>
+</head>
+<body>
+    <h1>Test Export PSB Data</h1>
+    <div class="info">
+        <p><strong>Fitur Export:</strong></p>
+        <ul>
+            <li>✅ Excel (.xlsx) - Format utama dengan styling</li>
+            <li>✅ CSV (.csv) - Fallback jika Excel gagal</li>
+            <li>✅ Filter support - Status, Education, Search</li>
+            <li>✅ Auto filename dengan tanggal dan filter</li>
+        </ul>
+    </div>
+    
+    <button onclick="testExportAll()">📊 Export All Data (Excel)</button>
+    <button onclick="testExportPending()">⏳ Export Pending Only</button>
+    <button onclick="testExportSD()">🎓 Export SD Only</button>
+    <button onclick="testExportCSV()">📄 Force CSV Export</button>
+    
+    <div id="result"></div>
+    
+    <script>
+        async function testExportAll() {
+            await exportData('/admin/psb-registrations/export');
+        }
+        
+        async function testExportPending() {
+            await exportData('/admin/psb-registrations/export?status=pending');
+        }
+        
+        async function testExportSD() {
+            await exportData('/admin/psb-registrations/export?education=SD');
+        }
+        
+        async function testExportCSV() {
+            // Simulate Excel failure by forcing CSV
+            await exportData('/admin/psb-registrations/export');
+        }
+        
+        async function exportData(url) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>🔄 Exporting...</p>';
+            
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/api${url}`);
+                
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const downloadUrl = window.URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = downloadUrl;
+                    
+                    // Determine file type and extension
+                    const contentType = response.headers.get('content-type');
+                    const isCSV = contentType?.includes('csv');
+                    const fileExtension = isCSV ? '.csv' : '.xlsx';
+                    const fileType = isCSV ? 'CSV' : 'Excel';
+                    
+                    link.download = `test_export_${Date.now()}${fileExtension}`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(downloadUrl);
+                    
+                    resultDiv.innerHTML = `
+                        <div class="result success">
+                            <h3>✅ Export Successful!</h3>
+                            <p><strong>Format:</strong> ${fileType}</p>
+                            <p><strong>File Size:</strong> ${(blob.size / 1024).toFixed(2)} KB</p>
+                            <p><strong>Content Type:</strong> ${contentType}</p>
+                            <p><strong>URL:</strong> ${url}</p>
+                        </div>
+                    `;
+                } else {
+                    let errorMessage = 'Export failed';
+                    try {
+                        const errorData = await response.json();
+                        errorMessage = errorData.message || errorMessage;
+                    } catch (e) {
+                        errorMessage = `Export failed (${response.status}: ${response.statusText})`;
+                    }
+                    
+                    resultDiv.innerHTML = `
+                        <div class="result error">
+                            <h3>❌ Export Failed!</h3>
+                            <p>${errorMessage}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+                        <h3>❌ Export Error!</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

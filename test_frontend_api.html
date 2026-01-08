@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; max-height: 300px; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Frontend API Test</h1>
+    
+    <div class="test-section">
+        <h3>📊 Test Statistics API (like frontend)</h3>
+        <button onclick="testStatistics()">Test Statistics</button>
+        <div id="statsResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>📋 Test Registrations API (like frontend)</h3>
+        <button onclick="testRegistrations()">Test Registrations</button>
+        <div id="regsResult"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://127.0.0.1:8000/api';
+        
+        async function testStatistics() {
+            const resultDiv = document.getElementById('statsResult');
+            resultDiv.innerHTML = '<p>⏳ Testing...</p>';
+            
+            try {
+                // This is exactly what the frontend calls
+                const response = await fetch(`${API_BASE}/admin/psb-registrations/statistics`);
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h4>✅ Statistics Working!</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
+                                <div style="text-align: center; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+                                    <h5>Total</h5>
+                                    <h3 style="margin: 0; color: #007bff;">${data.data.total}</h3>
+                                </div>
+                                <div style="text-align: center; padding: 10px; background: #fff3cd; border-radius: 5px;">
+                                    <h5>Pending</h5>
+                                    <h3 style="margin: 0; color: #856404;">${data.data.pending}</h3>
+                                </div>
+                                <div style="text-align: center; padding: 10px; background: #cce5ff; border-radius: 5px;">
+                                    <h5>Diproses</h5>
+                                    <h3 style="margin: 0; color: #004085;">${data.data.diproses}</h3>
+                                </div>
+                                <div style="text-align: center; padding: 10px; background: #d4edda; border-radius: 5px;">
+                                    <h5>Diterima</h5>
+                                    <h3 style="margin: 0; color: #155724;">${data.data.diterima}</h3>
+                                </div>
+                                <div style="text-align: center; padding: 10px; background: #f8d7da; border-radius: 5px;">
+                                    <h5>Ditolak</h5>
+                                    <h3 style="margin: 0; color: #721c24;">${data.data.ditolak}</h3>
+                                </div>
+                            </div>
+                            <pre style="margin-top: 10px;">${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            <h4>❌ Statistics Error!</h4>
+                            <p><strong>Status:</strong> ${response.status}</p>
+                            <p><strong>Error:</strong> ${data.message || 'Unknown error'}</p>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Network Error!</h4>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                        <p>Make sure backend server is running on http://127.0.0.1:8000</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function testRegistrations() {
+            const resultDiv = document.getElementById('regsResult');
+            resultDiv.innerHTML = '<p>⏳ Testing...</p>';
+            
+            try {
+                // This is exactly what the frontend calls
+                const response = await fetch(`${API_BASE}/admin/psb-registrations?per_page=50`);
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    const registrations = data.data;
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h4>✅ Registrations Working! (${registrations.length} records)</h4>
+                            <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                                <thead>
+                                    <tr style="background: #f2f2f2;">
+                                        <th style="border: 1px solid #ddd; padding: 8px;">ID</th>
+                                        <th style="border: 1px solid #ddd; padding: 8px;">NIK</th>
+                                        <th style="border: 1px solid #ddd; padding: 8px;">Nama</th>
+                                        <th style="border: 1px solid #ddd; padding: 8px;">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                    `;
+                    
+                    registrations.forEach(reg => {
+                        const statusColor = {
+                            pending: '#fef3c7',
+                            diproses: '#dbeafe',
+                            diterima: '#d1fae5',
+                            ditolak: '#fee2e2'
+                        }[reg.status] || '#fef3c7';
+                        
+                        resultDiv.innerHTML += `
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 8px;">${reg.id}</td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">${reg.nik}</td>
+                                <td style="border: 1px solid #ddd; padding: 8px;">${reg.nama_lengkap}</td>
+                                <td style="border: 1px solid #ddd; padding: 8px; background: ${statusColor};">${reg.status}</td>
+                            </tr>
+                        `;
+                    });
+                    
+                    resultDiv.innerHTML += `</tbody></table></div>`;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            <h4>❌ Registrations Error!</h4>
+                            <p><strong>Status:</strong> ${response.status}</p>
+                            <p><strong>Error:</strong> ${data.message || 'Unknown error'}</p>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Network Error!</h4>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Auto-test on page load
+        window.onload = function() {
+            setTimeout(testStatistics, 500);
+            setTimeout(testRegistrations, 1000);
+        };
+    </script>
+</body>
+</html>

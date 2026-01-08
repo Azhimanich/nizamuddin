@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Form Submission</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .form-section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 4px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test PSB Form Submission</h1>
+    
+    <div class="form-section">
+        <h2>Test Registration Form</h2>
+        <form id="testForm">
+            <div class="form-group">
+                <label for="nik">NIK (16 digit):</label>
+                <input type="text" id="nik" name="nik" maxlength="16" pattern="[0-9]{16}" required placeholder="1234567890123456">
+            </div>
+            
+            <div class="form-group">
+                <label for="fullName">Nama Lengkap:</label>
+                <input type="text" id="fullName" name="fullName" required placeholder="Ahmad Rizki Pratama">
+            </div>
+            
+            <div class="form-group">
+                <label for="birthPlace">Tempat Lahir:</label>
+                <input type="text" id="birthPlace" name="birthPlace" required placeholder="Jakarta">
+            </div>
+            
+            <div class="form-group">
+                <label for="birthDate">Tanggal Lahir:</label>
+                <input type="date" id="birthDate" name="birthDate" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="gender">Jenis Kelamin:</label>
+                <select id="gender" name="gender" required>
+                    <option value="">Pilih...</option>
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="address">Alamat Lengkap:</label>
+                <textarea id="address" name="address" rows="3" required placeholder="Jl. Merdeka No. 123, Jakarta"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Nomor Telepon:</label>
+                <input type="tel" id="phone" name="phone" required placeholder="08123456789">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="test@example.com">
+            </div>
+            
+            <div class="form-group">
+                <label for="parentName">Nama Orang Tua:</label>
+                <input type="text" id="parentName" name="parentName" placeholder="Bapak Susilo">
+            </div>
+            
+            <div class="form-group">
+                <label for="educationLevel">Tingkat Pendidikan:</label>
+                <select id="educationLevel" name="educationLevel">
+                    <option value="">Pilih...</option>
+                    <option value="SD/MI Kelas 1">SD/MI Kelas 1</option>
+                    <option value="SMP/MTs Kelas 7">SMP/MTs Kelas 7</option>
+                    <option value="SMA/MA Kelas 10">SMA/MA Kelas 10</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="motivation">Motivasi:</label>
+                <textarea id="motivation" name="motivation" rows="3" placeholder="Ingin belajar agama lebih dalam..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="agreement" name="agreement" required>
+                    Saya menyetujui syarat dan ketentuan
+                </label>
+            </div>
+            
+            <button type="submit" id="submitBtn">Submit Registration</button>
+        </form>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('testForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const resultDiv = document.getElementById('result');
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+            resultDiv.innerHTML = '';
+            
+            try {
+                // Collect form data
+                const formData = new FormData(e.target);
+                const data = {
+                    nik: formData.get('nik'),
+                    nama_lengkap: formData.get('fullName'),
+                    tempat_lahir: formData.get('birthPlace'),
+                    tanggal_lahir: formData.get('birthDate'),
+                    jenis_kelamin: formData.get('gender') === 'Laki-laki' ? 'L' : 'P',
+                    alamat_lengkap: formData.get('address'),
+                    nomor_telepon: formData.get('phone'),
+                    email: formData.get('email'),
+                    nama_orang_tua: formData.get('parentName') || null,
+                    tingkat_pendidikan: formData.get('educationLevel') || null,
+                    motivasi: formData.get('motivation') || null
+                };
+                
+                console.log('Submitting data:', data);
+                
+                // Submit to API
+                const response = await fetch('http://127.0.0.1:8000/api/psb/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                console.log('API Response:', result);
+                
+                if (result.success) {
+                    resultDiv.innerHTML = `
+                        <div class="success" style="margin-top: 20px; padding: 15px; border-radius: 8px;">
+                            <h3>✅ Registration Successful!</h3>
+                            <p><strong>Message:</strong> ${result.message}</p>
+                            <p><strong>Registration ID:</strong> ${result.data.id}</p>
+                            <p><strong>Status:</strong> ${result.data.status}</p>
+                            <pre><strong>Submitted Data:</strong><br>${JSON.stringify(data, null, 2)}</pre>
+                            <pre><strong>Response:</strong><br>${JSON.stringify(result, null, 2)}</pre>
+                        </div>
+                    `;
+                    e.target.reset();
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error" style="margin-top: 20px; padding: 15px; border-radius: 8px;">
+                            <h3>❌ Registration Failed!</h3>
+                            <p><strong>Error:</strong> ${result.message}</p>
+                            ${result.errors ? `<pre><strong>Validation Errors:</strong><br>${JSON.stringify(result.errors, null, 2)}</pre>` : ''}
+                            <pre><strong>Submitted Data:</strong><br>${JSON.stringify(data, null, 2)}</pre>
+                            <pre><strong>Response:</strong><br>${JSON.stringify(result, null, 2)}</pre>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Network Error:', error);
+                resultDiv.innerHTML = `
+                    <div class="error" style="margin-top: 20px; padding: 15px; border-radius: 8px;">
+                        <h3>❌ Network Error!</h3>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                        <p>Please make sure the backend server is running on http://127.0.0.1:8000</p>
+                    </div>
+                `;
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Registration';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test PSB Registration - Port 3000</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        .required { color: red; }
+        button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .result { margin-top: 20px; padding: 10px; border-radius: 4px; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="info">
+        <h3>📝 Testing PSB Registration - Port 3000</h3>
+        <p>Form ini untuk testing pendaftaran PSB dari port 3000 ke backend di 127.0.0.1:8000</p>
+        <p><strong>Semua field sekarang WAJIB diisi!</strong></p>
+    </div>
+    
+    <h1>Test PSB Registration Fix</h1>
+    <p>Halaman ini untuk testing fix pada form pendaftaran PSB. Form ini sekarang memiliki validasi yang sesuai dengan backend.</p>
+    
+    <form id="registrationForm">
+        <h2>Informasi Pribadi</h2>
+        
+        <div class="form-group">
+            <label>NIK <span class="required">*</span></label>
+            <input type="text" name="nik" maxlength="16" pattern="[0-9]{16}" required placeholder="16 digit NIK">
+        </div>
+        
+        <div class="form-group">
+            <label>Nama Lengkap <span class="required">*</span></label>
+            <input type="text" name="nama_lengkap" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Tempat Lahir <span class="required">*</span></label>
+            <input type="text" name="tempat_lahir" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Tanggal Lahir <span class="required">*</span></label>
+            <input type="date" name="tanggal_lahir" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Jenis Kelamin <span class="required">*</span></label>
+            <select name="jenis_kelamin" required>
+                <option value="">Pilih...</option>
+                <option value="L">Laki-laki</option>
+                <option value="P">Perempuan</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>Alamat Lengkap <span class="required">*</span></label>
+            <textarea name="alamat_lengkap" rows="3" required></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>Nomor Telepon <span class="required">*</span></label>
+            <input type="tel" name="nomor_telepon" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Email <span class="required">*</span></label>
+            <input type="email" name="email" required>
+        </div>
+        
+        <h2>Informasi Orang Tua</h2>
+        
+        <div class="form-group">
+            <label>Nama Orang Tua <span class="required">*</span></label>
+            <input type="text" name="nama_orang_tua" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Telepon Orang Tua <span class="required">*</span></label>
+            <input type="tel" name="telepon_orang_tua" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Email Orang Tua <span class="required">*</span></label>
+            <input type="email" name="email_orang_tua" required>
+        </div>
+        
+        <h2>Informasi Pendidikan</h2>
+        
+        <div class="form-group">
+            <label>Tingkat Pendidikan <span class="required">*</span></label>
+            <select name="tingkat_pendidikan" required>
+                <option value="">Pilih...</option>
+                <option value="Kepondokan">Kepondokan</option>
+                <option value="TK">TK</option>
+                <option value="SD/MI Kelas 1">SD/MI Kelas 1</option>
+                <option value="SD/MI Kelas 2">SD/MI Kelas 2</option>
+                <option value="SD/MI Kelas 3">SD/MI Kelas 3</option>
+                <option value="SD/MI Kelas 4">SD/MI Kelas 4</option>
+                <option value="SD/MI Kelas 5">SD/MI Kelas 5</option>
+                <option value="SD/MI Kelas 6">SD/MI Kelas 6</option>
+                <option value="SMP/MTs Kelas 7">SMP/MTs Kelas 7</option>
+                <option value="SMP/MTs Kelas 8">SMP/MTs Kelas 8</option>
+                <option value="SMP/MTs Kelas 9">SMP/MTs Kelas 9</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>Sekolah Asal <span class="required">*</span></label>
+            <input type="text" name="sekolah_asal" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Tahun Lulus <span class="required">*</span></label>
+            <input type="number" name="tahun_lulus" min="2020" max="2030" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Kemampuan Membaca Al-Quran <span class="required">*</span></label>
+            <select name="kemampuan_quran" required>
+                <option value="">Pilih...</option>
+                <option value="Belum bisa">Belum bisa</option>
+                <option value="Dasar (hijaiyah)">Dasar (hijaiyah)</option>
+                <option value="Sedang (surat pendek)">Sedang (surat pendek)</option>
+                <option value="Baik (surat panjang)">Baik (surat panjang)</option>
+                <option value="Sangat Baik (juz 30)">Sangat Baik (juz 30)</option>
+            </select>
+        </div>
+        
+        <h2>Informasi Tambahan</h2>
+        
+        <div class="form-group">
+            <label>Kebutuhan Khusus <span class="required">*</span></label>
+            <textarea name="kebutuhan_khusus" rows="3" required placeholder="Isi dengan detail jika ada, atau tulis 'Tidak ada'"></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>Motivasi Bergabung <span class="required">*</span></label>
+            <textarea name="motivasi" rows="4" required placeholder="Jelaskan mengapa Anda ingin bergabung dengan pesantren kami..."></textarea>
+        </div>
+        
+        <button type="submit">Kirim Pendaftaran</button>
+    </form>
+    
+    <div id="result"></div>
+    
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = {};
+            
+            // Convert FormData to JSON object
+            for (let [key, value] of formData.entries()) {
+                data[key] = value; // All fields are now required, no null fallback
+            }
+            
+            // Convert tahun_lulus to integer
+            if (data.tahun_lulus) {
+                data.tahun_lulus = parseInt(data.tahun_lulus);
+            }
+            
+            const resultDiv = document.getElementById('result');
+            
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/psb/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `
+                        <h3>✅ Pendaftaran Berhasil!</h3>
+                        <p>${result.message}</p>
+                        <p><strong>NIK:</strong> ${result.data.nik}</p>
+                        <p><strong>Nama:</strong> ${result.data.nama_lengkap}</p>
+                        <p><strong>Status:</strong> ${result.data.status}</p>
+                    `;
+                    // Reset form
+                    this.reset();
+                } else {
+                    resultDiv.className = 'result error';
+                    let errorHtml = `
+                        <h3>❌ Pendaftaran Gagal</h3>
+                        <p>${result.message}</p>
+                    `;
+                    
+                    // Add status check link if NIK already exists
+                    if (result.error_type === 'nik_exists') {
+                        const nik = data.nik;
+                        errorHtml += `
+                            <div style="margin-top: 10px; padding: 10px; background: #e3f2fd; border-radius: 4px;">
+                                <p>📋 <a href="/psb/status?nik=${nik}" style="color: #1976d2; text-decoration: underline;">Cek Status Pendaftaran</a></p>
+                            </div>
+                        `;
+                    }
+                    
+                    if (result.errors) {
+                        errorHtml += '<pre>' + JSON.stringify(result.errors, null, 2) + '</pre>';
+                    }
+                    
+                    resultDiv.innerHTML = errorHtml;
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `
+                    <h3>❌ Kesalahan Koneksi</h3>
+                    <p>Tidak dapat terhubung ke server. Pastikan backend server berjalan di http://127.0.0.1:8000</p>
+                    <p>Error: ${error.message}</p>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

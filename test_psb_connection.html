@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSB Connection Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        .info { background-color: #d1ecf1; border-color: #bee5eb; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🧪 PSB System Connection Test</h1>
+    
+    <div class="test-section info">
+        <h3>📋 Test Instructions</h3>
+        <p>This page tests the connection between PSB frontend and admin panel:</p>
+        <ol>
+            <li>Test form submission (creates data)</li>
+            <li>Test admin API endpoints (reads data)</li>
+            <li>Verify data flow from frontend to admin</li>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h3>📝 Test PSB Registration Form</h3>
+        <button onclick="testFormSubmission()">Submit Test Registration</button>
+        <div id="formResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>👨‍💼 Test Admin API Endpoints</h3>
+        <button onclick="testAdminAPI()">Test Admin Endpoints</button>
+        <div id="adminResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>🔍 Test Status Check</h3>
+        <button onclick="testStatusCheck()">Check Registration Status</button>
+        <div id="statusResult"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://127.0.0.1:8000/api';
+        const ADMIN_API_BASE = 'http://127.0.0.1:8000/api/admin';
+        
+        // Test data for registration
+        const testData = {
+            nik: '1234567890123456',
+            nama_lengkap: 'Test User',
+            tempat_lahir: 'Test City',
+            tanggal_lahir: '2000-01-01',
+            jenis_kelamin: 'L',
+            alamat_lengkap: 'Test Address 123',
+            nomor_telepon: '08123456789',
+            email: 'test@example.com',
+            nama_orang_tua: 'Parent Name',
+            telepon_orang_tua: '081234567890',
+            tingkat_pendidikan: 'SMP/MTs Kelas 7',
+            sekolah_asal: 'Test School',
+            motivasi: 'Test motivation for joining'
+        };
+
+        async function testFormSubmission() {
+            const resultDiv = document.getElementById('formResult');
+            resultDiv.innerHTML = '<p>⏳ Testing form submission...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/psb/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(testData)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h4>✅ Form Submission Successful!</h4>
+                            <p><strong>Message:</strong> ${data.message}</p>
+                            <p><strong>Registration ID:</strong> ${data.data.id}</p>
+                            <p><strong>Status:</strong> ${data.data.status}</p>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            <h4>❌ Form Submission Failed!</h4>
+                            <p><strong>Error:</strong> ${data.message}</p>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Network Error!</h4>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                        <p>Make sure backend server is running on http://127.0.0.1:8000</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function testAdminAPI() {
+            const resultDiv = document.getElementById('adminResult');
+            resultDiv.innerHTML = '<p>⏳ Testing admin endpoints...</p>';
+            
+            try {
+                // Test statistics endpoint
+                const statsResponse = await fetch(`${ADMIN_API_BASE}/psb-registrations/statistics`);
+                const statsData = await statsResponse.json();
+                
+                // Test registrations endpoint
+                const regsResponse = await fetch(`${ADMIN_API_BASE}/psb-registrations`);
+                const regsData = await regsResponse.json();
+                
+                if (statsData.success && regsData.success) {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h4>✅ Admin API Working!</h4>
+                            <h5>📊 Statistics:</h5>
+                            <pre>${JSON.stringify(statsData.data, null, 2)}</pre>
+                            <h5>📋 Recent Registrations:</h5>
+                            <pre>${JSON.stringify(regsData.data.slice(0, 2), null, 2)}</pre>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            <h4>❌ Admin API Error!</h4>
+                            <p><strong>Stats Error:</strong> ${statsData.message || 'Unknown'}</p>
+                            <p><strong>Registrations Error:</strong> ${regsData.message || 'Unknown'}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Admin API Network Error!</h4>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                        <p>Admin endpoints require authentication. This is expected behavior.</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function testStatusCheck() {
+            const resultDiv = document.getElementById('statusResult');
+            resultDiv.innerHTML = '<p>⏳ Testing status check...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/psb/check-status`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ nik: testData.nik })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h4>✅ Status Check Working!</h4>
+                            <p><strong>Message:</strong> ${data.message}</p>
+                            <p><strong>Name:</strong> ${data.data.nama_lengkap}</p>
+                            <p><strong>Status:</strong> ${data.data.status}</p>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            <h4>❌ Status Check Failed!</h4>
+                            <p><strong>Error:</strong> ${data.message}</p>
+                            <p>This is normal if no registration exists yet.</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Status Check Network Error!</h4>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Auto-run status check on page load
+        window.onload = function() {
+            setTimeout(testStatusCheck, 1000);
+        };
+    </script>
+</body>
+</html>

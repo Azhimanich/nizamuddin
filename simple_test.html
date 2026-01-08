@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Test - Port 3000</title>
+</head>
+<body>
+    <h1>Simple API Test - Port 3000</h1>
+    <button onclick="testAPI()">Test API</button>
+    <div id="result"></div>
+    
+    <script>
+        async function testAPI() {
+            try {
+                // Test simple GET request first
+                const response = await fetch('http://127.0.0.1:8000/api/test-psb');
+                const result = await response.json();
+                
+                document.getElementById('result').innerHTML = `
+                    <h3>✅ GET Request Success!</h3>
+                    <p>Status: ${response.status}</p>
+                    <pre>${JSON.stringify(result, null, 2)}</pre>
+                `;
+                
+                // Now test POST request
+                setTimeout(() => testPOST(), 1000);
+                
+            } catch (error) {
+                document.getElementById('result').innerHTML = `
+                    <h3>❌ Error!</h3>
+                    <p>${error.message}</p>
+                `;
+            }
+        }
+        
+        async function testPOST() {
+            const testData = {
+                nik: "1234567890123456",
+                nama_lengkap: "Test Simple POST",
+                tempat_lahir: "Test City",
+                tanggal_lahir: "2020-01-01",
+                jenis_kelamin: "L",
+                alamat_lengkap: "Test Address",
+                nomor_telepon: "08123456789",
+                email: "test.simple@example.com",
+                nama_orang_tua: "Parent Name",
+                telepon_orang_tua: "081987654321",
+                email_orang_tua: "parent@example.com",
+                tingkat_pendidikan: "SMP/MTs Kelas 7",
+                sekolah_asal: "SD Test School",
+                tahun_lulus: 2024,
+                kemampuan_quran: "Sedang (surat pendek)",
+                kebutuhan_khusus: "Tidak ada",
+                motivasi: "Ingin belajar agama lebih baik"
+            };
+            
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/psb/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(testData)
+                });
+                
+                const result = await response.json();
+                
+                document.getElementById('result').innerHTML += `
+                    <h3>✅ POST Request Success!</h3>
+                    <p>Status: ${response.status}</p>
+                    <pre>${JSON.stringify(result, null, 2)}</pre>
+                `;
+                
+            } catch (error) {
+                document.getElementById('result').innerHTML += `
+                    <h3>❌ POST Error!</h3>
+                    <p>${error.message}</p>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

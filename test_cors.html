@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CORS Test - Port 3000</title>
+</head>
+<body>
+    <h1>Test CORS Configuration - Port 3000</h1>
+    <p>Testing API request from port 3000 to backend at 127.0.0.1:8000</p>
+    <button onclick="testCORS()">Test API Request</button>
+    <div id="result"></div>
+    
+    <script>
+        async function testCORS() {
+            const testData = {
+                nik: "1111222233334444",
+                nama_lengkap: "Test CORS Port 3000",
+                tempat_lahir: "Test City",
+                tanggal_lahir: "2020-01-01",
+                jenis_kelamin: "L",
+                alamat_lengkap: "Test Address",
+                nomor_telepon: "08123456789",
+                email: "test.cors3000@example.com",
+                nama_orang_tua: "Parent Name",
+                telepon_orang_tua: "081987654321",
+                email_orang_tua: "parent@example.com",
+                tingkat_pendidikan: "SMP/MTs Kelas 7",
+                sekolah_asal: "SD Test School",
+                tahun_lulus: 2024,
+                kemampuan_quran: "Sedang (surat pendek)",
+                kebutuhan_khusus: "Tidak ada",
+                motivasi: "Ingin belajar agama lebih baik"
+            };
+            
+            document.getElementById('result').innerHTML = '<p>Mengirim request...</p>';
+            
+            try {
+                console.log('Sending request to:', 'http://127.0.0.1:8000/api/psb/register');
+                console.log('Request data:', testData);
+                
+                const response = await fetch('http://127.0.0.1:8000/api/psb/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(testData)
+                });
+                
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+                
+                const result = await response.json();
+                
+                document.getElementById('result').innerHTML = `
+                    <h3>✅ Success!</h3>
+                    <p><strong>Status:</strong> ${response.status}</p>
+                    <p><strong>Message:</strong> ${result.message || 'No message'}</p>
+                    <p><strong>Data:</strong></p>
+                    <pre>${JSON.stringify(result, null, 2)}</pre>
+                `;
+            } catch (error) {
+                console.error('CORS Error:', error);
+                document.getElementById('result').innerHTML = `
+                    <h3>❌ Error!</h3>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                    <p><strong>Details:</strong> Check browser console for more information</p>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
