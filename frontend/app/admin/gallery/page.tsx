@@ -65,7 +65,8 @@ export default function GalleryPage() {
         formDataToSend.append('description', formData.description)
         if (formData.album_id) formDataToSend.append('album_id', formData.album_id)
         
-        const file = fileInput.files[0]
+        const file = fileInput.files?.[0]
+        if (!file) return
         const validation = validateImage(file)
         
         if (!validation.valid) {
