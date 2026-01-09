@@ -105,7 +105,7 @@ export function PSBHero({ locale = 'id' }: { locale?: string }) {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <button
-              onClick={() => window.location.href = `http://localhost:3000/${locale}/psb/formulir`}
+              onClick={() => window.location.href = `/${locale}/psb/formulir`}
               className="group relative px-6 py-3 bg-white text-emerald-600 rounded-xl font-semibold hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
               <span className="relative z-10 flex items-center justify-center">
@@ -114,7 +114,7 @@ export function PSBHero({ locale = 'id' }: { locale?: string }) {
               </span>
             </button>
             <button 
-              onClick={() => window.location.href = `http://localhost:3000/${locale}/psb/status`}
+              onClick={() => window.location.href = `/${locale}/psb/status`}
               className="group px-6 py-3 bg-emerald-700 text-white border border-emerald-700 rounded-xl font-semibold hover:bg-emerald-800 transition-all duration-300 transform hover:-translate-y-1"
             >
               {t.cta_secondary}

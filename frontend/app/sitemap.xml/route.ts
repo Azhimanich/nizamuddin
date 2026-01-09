@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server'
 
 export async function GET() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://76.13.16.216'
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://76.13.16.216/api'
 
   try {
     // Fetch all published news
