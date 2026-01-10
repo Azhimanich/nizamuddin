@@ -38,6 +38,22 @@ html[dir="rtl"] body {
     pointer-events: none;
     z-index: -1;
   }
+  
+  /* Fix for mobile menu dropdowns */
+  .mobile-menu-container {
+    pointer-events: auto !important;
+    z-index: 60 !important;
+  }
+  
+  .mobile-menu-container button {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+  
+  .mobile-menu-container a {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
 }
 
 @layer components {

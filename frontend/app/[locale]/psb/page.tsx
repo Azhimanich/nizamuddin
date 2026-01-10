@@ -13,7 +13,7 @@ export default function PSBPage({ params }: { params: { locale: string } }) {
   return (
     <div className="min-h-screen bg-gray-50">
       <PSBHeader locale={locale} />
-      <main>
+      <main className="pt-16">
         <PSBHero locale={locale} />
         <PSBRequirements locale={locale} />
         <PSBFaq locale={locale} />

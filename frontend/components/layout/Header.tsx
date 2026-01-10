@@ -473,23 +473,25 @@ export function Header({ locale = 'id' }: { locale?: string }) {
         </div>
         
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-emerald-100">
+          <div className="lg:hidden border-t border-emerald-100 relative z-[60] mobile-menu-container" style={{ pointerEvents: 'auto' }}>
             <div className="space-y-2 px-4 py-4">
               {navigation.map((item) => (
                 <div key={item.name}>
                   {item.hasDropdown ? (
                     <div>
                       <button
+                        type="button"
                         onClick={(e) => {
                           e.preventDefault()
                           e.stopPropagation()
                           setDropdownState(item.id, !getDropdownState(item.id))
                         }}
-                        className={`w-full rounded-xl px-4 py-3 text-base font-semibold transition-all duration-300 flex items-center justify-between ${
+                        className={`w-full rounded-xl px-4 py-3 text-base font-semibold transition-all duration-300 flex items-center justify-between cursor-pointer hover:shadow-md ${
                           isActive(item.href)
                             ? 'bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-600 shadow-sm'
                             : 'text-gray-700 hover:bg-gradient-to-r hover:from-emerald-50 hover:to-teal-50 hover:text-emerald-600'
                         }`}
+                        style={{ pointerEvents: 'auto' }}
                       >
                         <span>{item.name}</span>
                         <ChevronDownIcon 
@@ -509,10 +511,15 @@ export function Header({ locale = 'id' }: { locale?: string }) {
                               <Link
                                 key={dropdownItem.id}
                                 href={getHref(dropdownItem.href)}
-                                className="flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors duration-200"
-                                onClick={() => {
+                                className="flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors duration-200 cursor-pointer"
+                                style={{ pointerEvents: 'auto' }}
+                                onClick={(e) => {
+                                  e.preventDefault()
+                                  e.stopPropagation()
                                   setDropdownState(item.id, false)
                                   setMobileMenuOpen(false)
+                                  // Navigate manually
+                                  window.location.href = getHref(dropdownItem.href)
                                 }}
                               >
                                 <div className="w-6 h-6 bg-gray-50 rounded-md flex items-center justify-center flex-shrink-0">
@@ -555,12 +562,19 @@ export function Header({ locale = 'id' }: { locale?: string }) {
                   ) : (
                     <Link
                       href={getHref(item.href)}
-                      className={`block rounded-xl px-4 py-3 text-base font-semibold transition-all duration-300 ${
+                      className={`block rounded-xl px-4 py-3 text-base font-semibold transition-all duration-300 cursor-pointer ${
                         isActive(item.href)
                           ? 'bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-600 shadow-sm'
                           : 'text-gray-700 hover:bg-gradient-to-r hover:from-emerald-50 hover:to-teal-50 hover:text-emerald-600'
                       }`}
-                      onClick={() => setMobileMenuOpen(false)}
+                      style={{ pointerEvents: 'auto' }}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        setMobileMenuOpen(false)
+                        // Navigate manually
+                        window.location.href = getHref(item.href)
+                      }}
                     >
                       {item.name}
                     </Link>
