@@ -25,18 +25,6 @@ http://localhost:3000/admin/login
 
 ### 2. Default Login Credentials
 
-#### Super Admin (Akses Penuh)
-- **Email:** `admin@pesantren.com`
-- **Password:** `password`
-
-#### Admin Akademik
-- **Email:** `akademik@pesantren.com`
-- **Password:** `password`
-
-#### Admin Humas
-- **Email:** `humas@pesantren.com`
-- **Password:** `password`
-
 ---
 
 ## 📋 Fitur Dashboard Berdasarkan Role
