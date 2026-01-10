@@ -70,7 +70,7 @@
     <div class="test-info">
         <h2>📱 PSB Page Responsiveness Test</h2>
         <p><strong>Issue:</strong> Halaman PSB tidak responsif di mobile - layout pecah, text overflow, dan horizontal scrollbar.</p>
-        <p><strong>Status:</strong> ✅ Fixed - Telah diperbaiki dengan responsive design yang lebih baik.</p>
+        <p><strong>Status:</strong> ✅ Fixed - Header responsif dengan ukuran font dan spacing yang disesuaikan untuk mobile.</p>
     </div>
 
     <div class="steps">
@@ -80,12 +80,11 @@
             <li>Test responsive design dengan device simulator atau resize browser</li>
             <li>Periksa elemen-elemen berikut di berbagai ukuran layar:</li>
             <ul>
-                <li><strong>Header bar</strong> - Phone dan email tidak overlap</li>
-                <li><strong>Logo</strong> - Ukuran menyesuaikan di mobile</li>
-                <li><strong>Title</strong> - Text "Pendaftaran Santri Baru" tidak pecah</li>
-                <li><strong>Description</strong> - Text description wrap dengan baik</li>
-                <li><strong>Feature cards</strong> - Grid layout responsif (1 kolom di mobile, 3 di desktop)</li>
-                <li><strong>Buttons</strong> - CTA buttons stack vertically di mobile</li>
+                <li><strong>Top bar</strong> - Phone, email, dan tagline tidak overlap, text truncate dengan max-width</li>
+                <li><strong>Logo</strong> - Ukuran menyesuaikan (h-8 w-8 di mobile, h-10 w-12 di desktop)</li>
+                <li><strong>School name</strong> - Text "PONDOK PESANTREN NIZAMUDDIN" dengan font size responsif</li>
+                <li><strong>Navigation</strong> - Menu items dengan whitespace-nowrap dan spacing responsif</li>
+                <li><strong>Mobile button</strong> - Hamburger menu dengan ukuran responsif</li>
                 <li><strong>No horizontal scrollbar</strong> - Tidak ada overflow horizontal</li>
             </ul>
             <li>Gunakan device buttons di bawah untuk simulasi ukuran layar</li>

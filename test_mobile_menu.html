@@ -49,7 +49,7 @@
     <div class="test-info">
         <h2>🧪 Mobile Menu Dropdown Test</h2>
         <p><strong>Issue:</strong> Tombol dropdown di dalam menu hamburger (Profil, Akademik, Ketenagaan) tidak bisa diklik.</p>
-        <p><strong>Status:</strong> ✅ Fixed - Telah diperbaiki dengan penambahan pointer-events dan cursor styles.</p>
+        <p><strong>Status:</strong> ✅ Fixed - Ditambahkan touch event handling dan touch-action manipulation untuk mobile.</p>
     </div>
 
     <div class="steps">
@@ -57,11 +57,12 @@
         <ol>
             <li>Buka website di <a href="http://localhost:3000" target="_blank">http://localhost:3000</a></li>
             <li>Klik tombol hamburger (☰) di pojok kanan atas untuk membuka menu mobile</li>
-            <li>Coba klik tombol dropdown untuk "Profil" - seharusnya terbuka dan menampilkan submenu</li>
-            <li>Coba klik tombol dropdown untuk "Akademik" - seharusnya terbuka dan menampilkan submenu</li>
+            <li>Coba klik tombol dropdown untuk "Profil" - seharusnya terbuka dan menampilkan submenu (touch & click)</li>
+            <li>Coba klik tombol dropdown untuk "Akademik" - seharusnya terbuka dan menampilkan submenu (termasuk Program Unggulan, Kalender Akademik)</li>
             <li>Coba klik tombol dropdown untuk "Ketenagaan" - seharusnya terbuka dan menampilkan submenu</li>
-            <li>Klik salah satu submenu untuk memastikan navigasi berfungsi</li>
+            <li>Klik salah satu submenu untuk memastikan navigasi berfungsi dengan touch events</li>
             <li>Test juga menu regular (Beranda, Berita, Galeri, Download, Kontak) untuk memastikan masih berfungsi</li>
+            <li>Verifikasi tidak ada delay atau unresponsiveness pada touch devices</li>
         </ol>
     </div>
 

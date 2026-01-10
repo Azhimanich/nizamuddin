@@ -65,23 +65,23 @@ export function PSBHeader({ locale = 'id' }: { locale?: string }) {
       isScrolled ? 'bg-white shadow-lg' : 'bg-white/95 backdrop-blur-sm'
     }`}>
       {/* Top Bar */}
-      <div className="bg-emerald-600 text-white py-2">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="bg-emerald-600 text-white py-1 sm:py-2">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
           {/* Mobile: Stack vertically, Desktop: Side by side */}
-          <div className="flex flex-col sm:flex-row justify-between items-center text-sm gap-2 sm:gap-0">
-            <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
-              <div className="flex items-center space-x-2">
-                <PhoneIcon className="h-4 w-4 flex-shrink-0" />
-                <span className="text-xs sm:text-sm truncate">{t.phone}</span>
+          <div className="flex flex-col sm:flex-row justify-between items-center text-xs sm:text-sm gap-1 sm:gap-0">
+            <div className="flex flex-col sm:flex-row items-center space-y-1 sm:space-y-0 sm:space-x-2 lg:space-x-4 w-full sm:w-auto">
+              <div className="flex items-center space-x-1 sm:space-x-2">
+                <PhoneIcon className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                <span className="text-xs sm:text-sm truncate max-w-[120px] sm:max-w-none">{t.phone}</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <EnvelopeIcon className="h-4 w-4 flex-shrink-0" />
-                <span className="text-xs sm:text-sm truncate">{t.email}</span>
+              <div className="flex items-center space-x-1 sm:space-x-2">
+                <EnvelopeIcon className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                <span className="text-xs sm:text-sm truncate max-w-[140px] sm:max-w-none">{t.email}</span>
               </div>
             </div>
-            <div className="flex items-center space-x-2 text-center sm:text-left">
-              <GlobeAltIcon className="h-4 w-4 flex-shrink-0" />
-              <span className="text-xs sm:text-sm font-medium truncate">{t.tagline}</span>
+            <div className="flex items-center space-x-1 sm:space-x-2 text-center sm:text-left">
+              <GlobeAltIcon className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+              <span className="text-xs sm:text-sm font-medium truncate max-w-[200px] sm:max-w-none">{t.tagline}</span>
             </div>
           </div>
         </div>
@@ -89,11 +89,11 @@ export function PSBHeader({ locale = 'id' }: { locale?: string }) {
 
       {/* Main Navigation */}
       <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
+          <div className="flex justify-between items-center h-14 sm:h-16">
             {/* Logo */}
-            <Link href={`/${locale}`} className="flex items-center space-x-2 flex-shrink-0">
-              <div className="h-10 w-10 sm:h-12 sm:w-12 relative flex-shrink-0">
+            <Link href={`/${locale}`} className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
+              <div className="h-8 w-8 sm:h-10 sm:w-12 relative flex-shrink-0">
                 <img
                   src="/logo.png"
                   alt="Logo Pesantren Nizamuddin"
@@ -104,27 +104,27 @@ export function PSBHeader({ locale = 'id' }: { locale?: string }) {
                     target.style.display = 'none'
                     const parent = target.parentElement
                     if (parent) {
-                      parent.innerHTML = '<div class="h-10 w-10 sm:h-12 sm:w-12 bg-primary-600 rounded-lg flex items-center justify-center"><span class="text-white font-bold text-sm sm:text-lg">PN</span></div>'
+                      parent.innerHTML = '<div class="h-8 w-8 sm:h-10 sm:w-12 bg-primary-600 rounded-lg flex items-center justify-center"><span class="text-white font-bold text-xs sm:text-sm lg:text-lg">PN</span></div>'
                     }
                   }}
                 />
               </div>
               <div className="flex flex-col" style={{ fontFamily: 'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}>
-                <span className="text-xs sm:text-sm font-bold leading-tight" style={{ 
+                <span className="text-[10px] sm:text-xs lg:text-sm font-bold leading-tight" style={{ 
                   background: 'linear-gradient(135deg, #0a0a0a 0%, #064e3b 50%, #065f46 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
-                  letterSpacing: '0.5px',
+                  letterSpacing: '0.3px',
                   fontWeight: '800',
                   fontFamily: 'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
                 }}>PONDOK PESANTREN</span>
-                <span className="text-xs sm:text-sm font-bold leading-tight" style={{ 
+                <span className="text-[10px] sm:text-xs lg:text-sm font-bold leading-tight" style={{ 
                   background: 'linear-gradient(135deg, #065f46 0%, #064e3b 50%, #0a0a0a 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
-                  letterSpacing: '0.5px',
+                  letterSpacing: '0.3px',
                   fontWeight: '800',
                   fontFamily: 'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
                 }}>NIZAMUDDIN</span>
@@ -132,22 +132,22 @@ export function PSBHeader({ locale = 'id' }: { locale?: string }) {
             </Link>
 
             {/* Navigation Menu */}
-            <nav className="hidden md:flex items-center space-x-4 lg:space-x-8">
+            <nav className="hidden md:flex items-center space-x-2 lg:space-x-4 xl:space-x-8">
               <Link 
                 href={`/${locale}`} 
-                className="text-gray-700 hover:text-emerald-600 transition-colors font-medium text-sm lg:text-base"
+                className="text-gray-700 hover:text-emerald-600 transition-colors font-medium text-xs lg:text-sm xl:text-base whitespace-nowrap"
               >
                 {t.home}
               </Link>
-              <div className="bg-emerald-100 px-3 py-1.5 lg:px-4 lg:py-2 rounded-lg">
-                <span className="text-emerald-700 font-semibold text-sm lg:text-base">PSB {academicYear}</span>
+              <div className="bg-emerald-100 px-2 py-1 lg:px-3 lg:py-1.5 xl:px-4 xl:py-2 rounded-lg">
+                <span className="text-emerald-700 font-semibold text-xs lg:text-sm xl:text-base whitespace-nowrap">PSB {academicYear}</span>
               </div>
             </nav>
 
             {/* Mobile Menu Button */}
             <div className="md:hidden">
-              <button className="p-2 rounded-md text-gray-700 hover:text-emerald-600 hover:bg-gray-50 transition-colors">
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <button className="p-1.5 sm:p-2 rounded-md text-gray-700 hover:text-emerald-600 hover:bg-gray-50 transition-colors">
+                <svg className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               </button>

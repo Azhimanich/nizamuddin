@@ -486,12 +486,17 @@ export function Header({ locale = 'id' }: { locale?: string }) {
                           e.stopPropagation()
                           setDropdownState(item.id, !getDropdownState(item.id))
                         }}
-                        className={`w-full rounded-xl px-4 py-3 text-base font-semibold transition-all duration-300 flex items-center justify-between cursor-pointer hover:shadow-md ${
+                        onTouchEnd={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          setDropdownState(item.id, !getDropdownState(item.id))
+                        }}
+                        className={`w-full rounded-xl px-4 py-3 text-base font-semibold transition-all duration-300 flex items-center justify-between cursor-pointer hover:shadow-md touch-manipulation ${
                           isActive(item.href)
                             ? 'bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-600 shadow-sm'
                             : 'text-gray-700 hover:bg-gradient-to-r hover:from-emerald-50 hover:to-teal-50 hover:text-emerald-600'
                         }`}
-                        style={{ pointerEvents: 'auto' }}
+                        style={{ pointerEvents: 'auto', touchAction: 'manipulation' }}
                       >
                         <span>{item.name}</span>
                         <ChevronDownIcon 
@@ -511,9 +516,17 @@ export function Header({ locale = 'id' }: { locale?: string }) {
                               <Link
                                 key={dropdownItem.id}
                                 href={getHref(dropdownItem.href)}
-                                className="flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors duration-200 cursor-pointer"
-                                style={{ pointerEvents: 'auto' }}
+                                className="flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors duration-200 cursor-pointer touch-manipulation"
+                                style={{ pointerEvents: 'auto', touchAction: 'manipulation' }}
                                 onClick={(e) => {
+                                  e.preventDefault()
+                                  e.stopPropagation()
+                                  setDropdownState(item.id, false)
+                                  setMobileMenuOpen(false)
+                                  // Navigate manually
+                                  window.location.href = getHref(dropdownItem.href)
+                                }}
+                                onTouchEnd={(e) => {
                                   e.preventDefault()
                                   e.stopPropagation()
                                   setDropdownState(item.id, false)
@@ -562,13 +575,20 @@ export function Header({ locale = 'id' }: { locale?: string }) {
                   ) : (
                     <Link
                       href={getHref(item.href)}
-                      className={`block rounded-xl px-4 py-3 text-base font-semibold transition-all duration-300 cursor-pointer ${
+                      className={`block rounded-xl px-4 py-3 text-base font-semibold transition-all duration-300 cursor-pointer touch-manipulation ${
                         isActive(item.href)
                           ? 'bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-600 shadow-sm'
                           : 'text-gray-700 hover:bg-gradient-to-r hover:from-emerald-50 hover:to-teal-50 hover:text-emerald-600'
                       }`}
-                      style={{ pointerEvents: 'auto' }}
+                      style={{ pointerEvents: 'auto', touchAction: 'manipulation' }}
                       onClick={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        setMobileMenuOpen(false)
+                        // Navigate manually
+                        window.location.href = getHref(item.href)
+                      }}
+                      onTouchEnd={(e) => {
                         e.preventDefault()
                         e.stopPropagation()
                         setMobileMenuOpen(false)
