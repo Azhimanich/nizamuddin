@@ -15,8 +15,12 @@ class NewsController extends Controller
         $limit = $request->get('limit', 10);
         $pinned = $request->get('pinned', false);
         
-        // Create cache key
-        $cacheKey = "news_" . md5(serialize($request->all()));
+        // Create cache key yang lebih spesifik
+        $cacheKey = "news_" . md5(serialize([
+            'category' => $category,
+            'limit' => $limit,
+            'pinned' => $pinned
+        ]));
         
         $result = Cache::remember($cacheKey, 3600, function() use ($category, $limit, $pinned) {
             $query = News::where('is_published', true)
@@ -26,7 +30,7 @@ class NewsController extends Controller
             if ($pinned) {
                 $query->where('is_pinned', true)
                     ->orderBy('published_at', 'desc')
-                    ->limit(2);
+                    ->limit(3); // Increased to 3 for better display
             } else {
                 $query->orderBy('published_at', 'desc');
             }

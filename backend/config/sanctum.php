@@ -12,7 +12,7 @@ return [
 
     'guard' => ['web'],
 
-    'expiration' => null,
+    'expiration' => env('SANCTUM_EXPIRATION', 525600), // 1 tahun dalam menit
 
     'token_prefix' => env('SANCTUM_TOKEN_PREFIX', ''),
 

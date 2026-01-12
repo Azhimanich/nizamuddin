@@ -23,7 +23,7 @@ export function NewsAgendaSection({ locale = 'id' }: { locale?: string }) {
         let pinnedNews: any[] = []
         if (pinnedResponse.ok) {
           const pinnedData = await pinnedResponse.json()
-          pinnedNews = Array.isArray(pinnedData) ? pinnedData.slice(0, 2) : []
+          pinnedNews = pinnedData.data || []
         }
 
         // If less than 2 pinned, fetch latest news to fill up to 2

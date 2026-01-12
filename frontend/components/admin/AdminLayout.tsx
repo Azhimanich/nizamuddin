@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
-import { getAuthToken, getUserData, clearAuthData, syncSessionStorage } from '@/lib/auth'
+import { getAuthToken, getUserData, clearAuthData, syncSessionStorage, setupInactivityListeners } from '@/lib/auth'
 
 interface AdminLayoutProps {
   children: React.ReactNode
@@ -50,6 +50,9 @@ export function AdminLayout({ children }: AdminLayoutProps) {
     
     // Sync sessionStorage dari localStorage backup
     syncSessionStorage()
+    
+    // Setup inactivity listeners
+    setupInactivityListeners()
     
     // Cek auth
     const token = getAuthToken()

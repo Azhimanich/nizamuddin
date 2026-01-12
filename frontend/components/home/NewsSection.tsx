@@ -10,7 +10,7 @@ export function NewsSection() {
   const [news, setNews] = useState<any[]>([])
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/news?limit=3&priority=pinned`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/news?pinned=true`)
       .then((res) => res.json())
       .then((data) => {
         if (data.data) {

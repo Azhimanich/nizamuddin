@@ -127,7 +127,7 @@ export function PSBHeader({ locale = 'id' }: { locale?: string }) {
                   letterSpacing: '0.3px',
                   fontWeight: '800',
                   fontFamily: 'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
-                }}>NIZAMUDDIN</span>
+                }}>NIZHAMMUDDIN</span>
               </div>
             </Link>
 
